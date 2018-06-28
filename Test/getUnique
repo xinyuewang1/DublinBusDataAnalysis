@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+	echo "Please enter a directory."
+	exit 1
+fi
+
+#Loop through tripid in each file in directory.
+for file in $1/*; do
+	sort -u $file -o $file
+done

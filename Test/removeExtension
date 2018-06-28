@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for file in $1/*; do
+	mv $file $(echo "$file" | cut -f 1 -d '.')
+done

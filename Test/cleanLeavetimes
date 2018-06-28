@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#Read in file
+#while IFS='' read -r line || [[ -n "$line" ]]; do
+	#echo "$line" $line have the line info
+	#now manage to trim it
+awk -F";" '{ print $2-6,$8-9,$15 >> "2016.csv"}'	
+	
+#done < "$1"
+
