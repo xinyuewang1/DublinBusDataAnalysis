@@ -1,29 +1,8 @@
 #!/bin/bash
 
-# Take file name as input, clean the leavetime.
-
-# cut off columns
-awk -F";" 'BEGIN{OFS=",";} { print $2,$3,$4,$5,$6,$8,$9,$15 >> "2017.csv"}' $1
-
-# Save the first row, trim the time in first column
-awk -F, -vOFS=, 'NR>1{$1=substr($1,1,9)} { print $0 >> "2017t.csv" }' 2017.csv
-
-#remove old file
-rm 2017.csv
-
-#Get rid of surpressed flaged 1
-awk -F"," -vOFS="," 'NR==1 || (NR>1 && $8=="")' 2017t.csv >>2017s.csv
-
-#remove old file
-rm 2017t.csv
-
-# get rid of last empty column
-awk -F"," 'BEGIN{OFS=",";} NF{NF-=1};1' <2017s.csv >>2017r.csv
-
-# remove old file
-rm 2017s.csv
-
-#Just in case, remove all the empty rows
-sed -i '/^$/d' 2017r.csv
- 
-	
+for file in $1/*; do
+	f=$(basename $file)
+#	echo $f
+	grep -Fwf $file ../2016leavetimes.csv > "leavetimes/"$f"l"
+	grep -Fwf $file ../2017leavetimes.csv >> "leavetimes/"$f"l"
+done
